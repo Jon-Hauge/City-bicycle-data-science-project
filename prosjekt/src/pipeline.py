@@ -17,7 +17,7 @@ def run_pipeline(output_path="prosjekt/output/model_ready.csv"):
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     merged_df.to_csv(output_path, index=False)
-    print(f"✅ Ferdig! Lagret til {output_path}")
+    print(f"Ferdig! Lagret til {output_path}")
 
 
 if __name__ == "__main__":
