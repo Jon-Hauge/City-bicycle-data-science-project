@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 
-# konverterer timestamp på all data til riktig format og tidssone
-# Filtrerer også data i trips og weather til å kun omhandle perioden stations måler
 def sort_timeframe(stations_df, trips_df, weather_df):
+    # konverterer timestamp på all data til riktig format og tidssone
+    # Filtrerer også data i trips og weather til å kun omhandle perioden stations måler
     stations_df["timestamp"] = pd.to_datetime(stations_df["timestamp"], utc=True).dt.tz_convert("Europe/Oslo")
     trips_df["started_at"] = pd.to_datetime(trips_df["started_at"], utc=True, format="ISO8601").dt.tz_convert("Europe/Oslo")
     trips_df["ended_at"] = pd.to_datetime(trips_df["ended_at"], utc=True,  format="ISO8601").dt.tz_convert("Europe/Oslo")
@@ -16,7 +16,13 @@ def sort_timeframe(stations_df, trips_df, weather_df):
     trips_df = trips_df[(trips_df["ended_at"] >= start_time) & (trips_df["ended_at"] <= end_time)]
     weather_df = weather_df[(weather_df["timestamp"] >= start_time) & (weather_df["timestamp"] <= end_time)]
 
-# preprosesserer data før videre analyse
+
+# OpenAI's ChatGPT ble brukt til å formulere og/eller komme opp med ideer for deler av kode.
+# Dette gjelder target_stations_df, der det blir brukt resampling ihht til LOCF-prinsippet
+# og opprettelsen av de tre datasettene fra trips.
+# All kode som er hjulpet av AI er forstått i seg selv og ihht til resten av programmet.
+# OpenAI - https://chatgpt.com - henta 14.09.25
+
 def preprocess_data(stations_df, trips_df):
     # preprosesserer stations ved å opprette ny dataframe med kun timestamp, target_stations
     # og ledige sykler. Sorterer i tillegg timer ihht LOCF

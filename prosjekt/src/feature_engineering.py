@@ -1,6 +1,13 @@
 import numpy as np
 import pandas as pd
 
+
+# OpenAI's ChatGPT ble brukt til å formulere og/eller komme opp med ideer for deler av kode.
+# Dette gjelder merge-funksjonene for å smelte sammen datasettene og interpolering
+# og utfylling av NaN-rader til å inneholde 0 for analyse i del 2.
+# All kode som er hjulpet av AI er forstått i seg selv og ihht til resten av programmet.
+# OpenAI - https://chatgpt.com - henta 14.09.25 
+
 def merge_data(target_stations_df, trips_hourly, trips_arrivals, trips_departures, weather_df):
 
     # slår sammen alt til en dataframe, merged_df, med alle stasjoner, sykkelbruk og vær
