@@ -9,13 +9,6 @@ def sort_timeframe(stations_df, trips_df, weather_df):
     trips_df["ended_at"] = pd.to_datetime(trips_df["ended_at"], utc=True,  format="ISO8601").dt.tz_convert("Europe/Oslo")
     weather_df["timestamp"] = pd.to_datetime(weather_df["timestamp"], utc=True).dt.tz_convert("Europe/Oslo")
 
-    start_time = stations_df["timestamp"].min()
-    end_time = stations_df["timestamp"].max()
-
-    trips_df = trips_df[(trips_df["started_at"] >= start_time) & (trips_df["started_at"] <= end_time)]
-    trips_df = trips_df[(trips_df["ended_at"] >= start_time) & (trips_df["ended_at"] <= end_time)]
-    weather_df = weather_df[(weather_df["timestamp"] >= start_time) & (weather_df["timestamp"] <= end_time)]
-
 
 # OpenAI's ChatGPT ble brukt til å formulere og/eller komme opp med ideer for deler av kode.
 # Dette gjelder target_stations_df, der det blir brukt resampling ihht til LOCF-prinsippet

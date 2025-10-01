@@ -3,7 +3,7 @@ from preprocessing import sort_timeframe, preprocess_data
 from feature_engineering import merge_data
 import os
 
-# kjører pipelinen, som kombinerer alle andre filer og skriver til model_ready.csv
+# kombinerer alle filer og skriver til model_ready.csv
 def run_pipeline(output_path="prosjekt/output/model_ready.csv"):
     print("Laster data...")
     stations_df, trips_df, weather_df = load_data()
@@ -17,7 +17,7 @@ def run_pipeline(output_path="prosjekt/output/model_ready.csv"):
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     merged_df.to_csv(output_path, index=False)
-    print(f"Ferdig! Lagret til {output_path}")
+    print(f"\nFerdig! Lagret til {output_path}")
 
 
 if __name__ == "__main__":

@@ -52,4 +52,9 @@ def merge_data(target_stations_df, trips_hourly, trips_arrivals, trips_departure
     ]
     merged_df = merged_df[cols]
 
+    # dropper målinger fra 15.04-15.08 grunnet statiske målinger i perioden
+    mask = ~((merged_df["timestamp"] >= "2024-04-15") & (merged_df["timestamp"] <= "2024-08-15"))
+    merged_df = merged_df[mask]
+
+
     return merged_df
