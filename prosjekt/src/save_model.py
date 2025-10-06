@@ -1,4 +1,4 @@
-import joblib
+import pickle
 from train_model import import_data, split_data, train_lasso_model
 
 # lagrer modellen til egen fil og validerer
@@ -14,10 +14,10 @@ def save_and_validate_model(output_path="prosjekt/models/best_model.pkl"):
     print("Finner beste modell og tilhørende RMSE...")
     best_model, train_rmse, val_rmse, test_rmse = train_lasso_model(X_train, X_val, X_test, y_train, y_val, y_test)
 
-    joblib.dump(best_model, "prosjekt/models/best_model.pkl")
+    pickle.dump(best_model, open("prosjekt/models/best_model.pkl", "wb"))
     print(f"\nFerdig! Lagret til {output_path}")
 
-    finished_model = joblib.load("prosjekt/models/best_model.pkl")
+    finished_model = pickle.load(open("prosjekt/models/best_model.pkl", "rb"))
     print("\n-----------\nValidering:\n-----------")
     print("Modelltype:", type(finished_model))
 
