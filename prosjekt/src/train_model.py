@@ -6,7 +6,7 @@ from sklearn.metrics import root_mean_squared_error
 from sklearn.linear_model import Lasso
 
 # importerer data
-def import_data():
+def import_model():
     model_ready_df = pd.read_csv("prosjekt/output/model_ready.csv")
     return model_ready_df
 
@@ -17,8 +17,8 @@ def split_data(model_ready_df):
     y = model_ready_df["free_bikes_next_hour"]
 
     # deler opp i trenings-, validerings- og testdata
-    X_train, X_valtest, y_train, y_valtest = train_test_split(X, y, train_size=0.7, shuffle=False)
-    X_val, X_test, y_val, y_test = train_test_split(X_valtest, y_valtest, train_size=0.5, shuffle=False)
+    X_train, X_valtest, y_train, y_valtest = train_test_split(X, y, train_size=0.7, shuffle=False, random_state=42)
+    X_val, X_test, y_val, y_test = train_test_split(X_valtest, y_valtest, train_size=0.5, shuffle=False, random_state=42)
 
     return X_train, X_val, X_test, y_train, y_val, y_test
 
