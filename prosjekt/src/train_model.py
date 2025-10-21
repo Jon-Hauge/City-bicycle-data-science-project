@@ -6,18 +6,13 @@ from sklearn.metrics import root_mean_squared_error
 from sklearn.linear_model import Lasso
 from sklearn.preprocessing import PolynomialFeatures
 
-# importerer data
-def import_model():
-    model_ready_df = pd.read_csv("prosjekt/output/model_ready.csv")
-    return model_ready_df
-
 def split_data(model_ready_df):
     # deler data i mål- og prediktorvariabler og gjør om stations til å bruke one-hot encode
     X = pd.get_dummies(model_ready_df.drop(columns=["free_bikes_next_hour", "timestamp"]),
                     columns=["station"], prefix="station")
     y = model_ready_df["free_bikes_next_hour"]
 
-    # deler opp i trenings-, validerings- og testdata
+    # deler opp i trenings-, validerings- og testdata uten tilfeldig stokking og med satt random_seed
     X_train, X_valtest, y_train, y_valtest = train_test_split(X, y, train_size=0.7, shuffle=False, random_state=42)
     X_val, X_test, y_val, y_test = train_test_split(X_valtest, y_valtest, train_size=0.5, shuffle=False, random_state=42)
 
@@ -33,15 +28,11 @@ def train_lasso_pf_model(X_train, X_val, X_test, y_train, y_val, y_test):
     # lager og trener lasso-modeller på verdier av alpha mellom 0.01 og 10
     lasso_pf_models = {alpha: Lasso(alpha=alpha) for alpha in np.arange(0.01, 10, 0.1)}
 
-    train_rmse_scores = {}
     val_rmse_scores = {}
-    test_rmse_scores = {}
 
     for alpha, model in lasso_pf_models.items():
         model.fit(X_train_pf, y_train)
-        train_rmse_scores[alpha] = root_mean_squared_error(y_train, model.predict(X_train_pf))
         val_rmse_scores[alpha] = root_mean_squared_error(y_val, model.predict(X_val_pf))
-        test_rmse_scores[alpha] = root_mean_squared_error(y_test, model.predict(X_test_pf))
 
     # finner hvilken alpha som gir lavest RMSE på valideringsdata
     best_alpha = min(val_rmse_scores, key=val_rmse_scores.get)
@@ -50,8 +41,8 @@ def train_lasso_pf_model(X_train, X_val, X_test, y_train, y_val, y_test):
     best_model = lasso_pf_models[best_alpha]
 
     # finner RMSE på all data for beste verdi av alpha
-    train_rmse = train_rmse_scores[best_alpha]
-    val_rmse = val_rmse_scores[best_alpha]
-    test_rmse = test_rmse_scores[best_alpha]
+    train_rmse = round(root_mean_squared_error(y_train, best_model.predict(X_train_pf)), 3)
+    val_rmse = round(root_mean_squared_error(y_val, best_model.predict(X_val_pf)), 3)
+    test_rmse = round(root_mean_squared_error(y_test, best_model.predict(X_test_pf)), 3)
 
     return best_model, train_rmse, val_rmse, test_rmse
