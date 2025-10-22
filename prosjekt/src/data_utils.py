@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def load_data():
+def load_raw_data():
 
     # laster inn rådata
     stations_df = pd.read_csv("prosjekt/raw_data/stations.csv")
@@ -21,7 +21,7 @@ def preprocess_data(stations_df, trips_df, weather_df):
     # konverterer timestamp på all data til riktig format og tidssone
     stations_df["timestamp"] = pd.to_datetime(stations_df["timestamp"], utc=True).dt.tz_convert("Europe/Oslo")
     trips_df["started_at"] = pd.to_datetime(trips_df["started_at"], utc=True, format="ISO8601").dt.tz_convert("Europe/Oslo")
-    trips_df["ended_at"] = pd.to_datetime(trips_df["ended_at"], utc=True,  format="ISO8601").dt.tz_convert("Europe/Oslo")
+    trips_df["ended_at"] = pd.to_datetime(trips_df["ended_at"], utc=True, format="ISO8601").dt.tz_convert("Europe/Oslo")
     weather_df["timestamp"] = pd.to_datetime(weather_df["timestamp"], utc=True).dt.tz_convert("Europe/Oslo")
 
     # Oppretter en ny dataframe med kun timestamp, target_stations og
@@ -108,6 +108,5 @@ def merge_data(target_stations_df, trips_hourly, trips_arrivals, trips_departure
     # dropper målinger fra 15.04.24 - 15.08.24 grunnet statiske målinger i perioden
     mask = ~((merged_df["timestamp"] >= "2024-04-15") & (merged_df["timestamp"] <= "2024-08-15"))
     merged_df = merged_df[mask]
-
 
     return merged_df

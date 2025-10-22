@@ -6,7 +6,15 @@ from sklearn.metrics import root_mean_squared_error
 from sklearn.linear_model import Lasso
 from sklearn.preprocessing import PolynomialFeatures
 
+def load_model_ready():
+
+    # laster inn ferdig preprosessert og sammensmeltet rådata
+    model_ready_df = pd.read_csv("prosjekt/output/model_ready.csv")
+    
+    return model_ready_df
+
 def split_data(model_ready_df):
+
     # deler data i mål- og prediktorvariabler og gjør om stations til å bruke one-hot encode
     X = pd.get_dummies(model_ready_df.drop(columns=["free_bikes_next_hour", "timestamp"]),
                     columns=["station"], prefix="station")
@@ -19,13 +27,14 @@ def split_data(model_ready_df):
     return X_train, X_val, X_test, y_train, y_val, y_test
 
 def train_lasso_pf_model(X_train, X_val, X_test, y_train, y_val, y_test):
+
     # definerer polynom-transformerte data
     poly = PolynomialFeatures(degree=2)
     X_train_pf = poly.fit_transform(X_train)
     X_val_pf = poly.transform(X_val)
     X_test_pf = poly.transform(X_test)
 
-    # lager og trener lasso-modeller på verdier av alpha mellom 0.01 og 10
+    # lager og trener lasso-modeller på verdier av alpha mellom 0.01 og 10 med steg 0.1
     lasso_pf_models = {alpha: Lasso(alpha=alpha) for alpha in np.arange(0.01, 10, 0.1)}
 
     val_rmse_scores = {}
