@@ -1,5 +1,5 @@
 from data_utils import load_raw_data, preprocess_data, merge_data
-from prosjekt.src.train_models import load_model_ready, split_data, train_models
+from train_models import load_model_ready, split_data, train_models
 import os
 import pickle
 

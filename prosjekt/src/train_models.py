@@ -63,7 +63,7 @@ def train_models(X_train, X_val, X_test, y_train, y_val, y_test):
     best_model_lasso = lasso_models[best_alpha]
     best_model_lasso_pf = lasso_models_pf[best_alpha_pf]
 
-    # legger til beste lasso-modeller i en dictionary og sammenligner med baseline og SVR
+    # legger til beste lasso-modeller i en dictionary og sammenligner med SVR og baseline
     models = {"Lasso": best_model_lasso,
           "Poly + Lasso": best_model_lasso_pf,
           "Support Vector": make_pipeline(StandardScaler(), SVR(kernel="linear")),
