@@ -24,9 +24,8 @@
     │
     ├── src/
     │   ├── data_utils.py       # Inneholder funksjoner for å laste inn, preprosessere og smelte sammen data
-    |   ├── pipeline.py         # Pipeline for del 1 og 2, erstattes med train.py for del 3
     │   ├── predict.py          # Predikerer for neste hele klokketime fra siste tidsstempel i rådata
-    │   ├── train_model.py      # Inneholder funksjoner for å trene den polynomtransformerte lasso-regresjons-modellen
+    │   ├── train_models.py      # Inneholder funksjoner for å trene de ulike regresjonsmodellene
     │   └── train.py            # Her kjøres hele pipelinen fra rådata til lagret modell
     │
     |── hvordan_bruke.txt

@@ -1,5 +1,5 @@
 from data_utils import load_raw_data, preprocess_data, merge_data
-from train_model import load_model_ready, split_data, train_lasso_pf_model
+from prosjekt.src.train_models import load_model_ready, split_data, train_models
 import os
 import pickle
 
@@ -33,7 +33,7 @@ def run_pipeline():
     X_train, X_val, X_test, y_train, y_val, y_test = split_data(model_ready_df)
 
     print("Finner beste modell og tilhørende RMSE...")
-    best_model, train_rmse, val_rmse, test_rmse = train_lasso_pf_model(X_train, X_val, X_test, y_train, y_val, y_test)
+    best_model, train_rmse, val_rmse, test_rmse = train_models(X_train, X_val, X_test, y_train, y_val, y_test)
 
     output_path_ml = "prosjekt/models/best_model.pkl"
     pickle.dump(best_model, open("prosjekt/models/best_model.pkl", "wb"))

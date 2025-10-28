@@ -3,20 +3,19 @@ from datetime import timedelta
 from sklearn.preprocessing import PolynomialFeatures
 import pickle
 
-from data_utils import load_raw_data
-from train_model import load_model_ready
+from data_utils import load_raw_data, preprocess_data, merge_data
 
 def predict():
     # laster inn, sorterer, preprosesser og smelter sammen data
-    stations_df, _,_ = load_raw_data()
-    model_ready_df = load_model_ready()
+    stations_df, trips_df, weather_df = load_raw_data()
+    target_stations_df, trips_hourly, trips_arrivals, trips_departures = preprocess_data(stations_df, trips_df, weather_df)
+    model_ready_df = merge_data(target_stations_df, trips_hourly, trips_arrivals, trips_departures, weather_df)
 
     # finner siste timestamp i data, neste hele klokketime og predikert time.
-    # Må bruke stations_df til siste timestamp siden model_ready_df allerede er rundet opp
-    # og trekke fra timer som fjernes fra model_ready_df i resampling
-    stations_df["timestamp"] = pd.to_datetime(stations_df["timestamp"], utc=True).dt.tz_convert("Europe/Oslo")
-    last_timestamp = stations_df["timestamp"].max() - timedelta(hours=2)
-    next_hour = pd.to_datetime(model_ready_df["timestamp"].max())
+    # Må bruke stations_df til siste timestamp siden merge_data runder opp.
+    # Trekker da fra timer som fjernes fra model_ready_df i resampling
+    last_timestamp = stations_df["timestamp"].max() #- timedelta(hours=2)
+    next_hour = pd.to_datetime(model_ready_df["timestamp"].max()) + timedelta(hours=2)
     prediction_timestamp = next_hour + timedelta(hours=1)
 
     # laster inn ML-modellen og kolonnene med features, og definerer target_stations
