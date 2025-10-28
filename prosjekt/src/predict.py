@@ -6,16 +6,14 @@ import pickle
 from data_utils import load_raw_data, preprocess_data, merge_data
 
 def predict():
-    # laster inn, sorterer, preprosesser og smelter sammen data
+    # laster inn, sorterer, preprosesserer og smelter sammen data
     stations_df, trips_df, weather_df = load_raw_data()
     target_stations_df, trips_hourly, trips_arrivals, trips_departures = preprocess_data(stations_df, trips_df, weather_df)
     model_ready_df = merge_data(target_stations_df, trips_hourly, trips_arrivals, trips_departures, weather_df)
 
-    # finner siste timestamp i data, neste hele klokketime og predikert time.
-    # Må bruke stations_df til siste timestamp siden merge_data runder opp.
-    # Trekker da fra timer som fjernes fra model_ready_df i resampling
-    last_timestamp = stations_df["timestamp"].max() #- timedelta(hours=2)
-    next_hour = pd.to_datetime(model_ready_df["timestamp"].max()) + timedelta(hours=2)
+    # finner siste timestamp i rådata, neste hele klokketime og predikert time
+    last_timestamp = stations_df["timestamp"].max()
+    next_hour = (last_timestamp + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
     prediction_timestamp = next_hour + timedelta(hours=1)
 
     # laster inn ML-modellen og kolonnene med features, og definerer target_stations
