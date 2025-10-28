@@ -36,11 +36,13 @@ def run_pipeline():
     best_model, train_rmse, val_rmse, test_rmse = train_models(X_train, X_val, X_test, y_train, y_val, y_test)
 
     output_path_ml = "prosjekt/models/best_model.pkl"
-    pickle.dump(best_model, open("prosjekt/models/best_model.pkl", "wb"))
+    output_path_fcl = "prosjekt/models/feature_cols.pkl"
     feature_cols = list(X_train.columns)
-    pickle.dump(feature_cols, open("prosjekt/models/feature_cols.pkl", "wb"))
 
-    print(f"\nFerdig! Lagret til {output_path_ml}")
+    pickle.dump(best_model, open(output_path_ml, "wb"))
+    pickle.dump(feature_cols, open(output_path_fcl, "wb"))
+
+    print(f"\nFerdig! Lagret modell til {output_path_ml}\n og features til {output_path_fcl}")
 
     finished_model = pickle.load(open("prosjekt/models/best_model.pkl", "rb"))
     print("\n-----------\nValidering:\n-----------")
