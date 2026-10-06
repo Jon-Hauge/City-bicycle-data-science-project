@@ -1,0 +1,46 @@
+1. Sørg for at filene i prosjektet følger dette hierarkiet:
+
+    models/
+    |── best_model.pkl              # Her lagres den beste prediksjonsmodellen
+    └── feature_cols.pkl            # Her lagres string av features for bruk i predict.py
+    
+    notebooks/
+    |── 01_explore_stations.ipynb   # Her utforskes stations.csv
+    |── 02_explore_trips.ipynb      # Her utforskes trips.csv
+    |── 03_explore_weather.ipynb    # Her utforskes weather.csv
+    |── 04_explore_all.ipynb        # Her utforskes sammensmeltet rådata
+    └── 05_model_learning.ipynb     # Her utføres det regresjonstrening på en rekke modeller
+    
+    output/
+    └── model_ready.csv             # Her ligger ferdig prosessert og sammensmeltet rådata
+    
+    raw_data/
+    |── README.md
+    |── stations.csv               # Her ligger rådata for stations.csv
+    |── trips.csv                  # Her ligger rådata for trips.csv
+    └── weather.csv                # Her ligger rådata for weather.csv
+    
+    src/
+    ├── data_utils.py       # Inneholder funksjoner for å laste inn, preprosessere og smelte sammen data
+    ├── predict.py          # Predikerer for neste hele klokketime fra siste tidsstempel i rådata
+    ├── train_models.py      # Inneholder funksjoner for å trene de ulike regresjonsmodellene
+    └── train.py            # Her kjøres hele pipelinen fra rådata til lagret modell
+    
+    hvordan_bruke.txt
+    prosjektbeskrivelse_INF161_H25.md
+    
+
+
+2. Sørg for at du har de nødvendige bibliotekene installert i din kernel.
+   I denne oppgaven brukes det:
+        numpy
+        pandas
+        plotly express
+        datetime
+        sklearn
+        os
+        pickle
+
+
+3a. For å kjøre notatbøkene, gå inn i den valgte notatboken og trykk "run all"
+3b. For å kjøre src-filene, kjør først train.py og deretter predict.py
