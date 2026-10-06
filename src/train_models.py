@@ -13,7 +13,7 @@ from sklearn.svm import SVR
 def load_model_ready():
 
     # laster inn ferdig preprosessert og sammensmeltet rådata
-    model_ready_df = pd.read_csv("prosjekt/output/model_ready.csv")
+    model_ready_df = pd.read_csv("output/model_ready.csv")
     
     return model_ready_df
 

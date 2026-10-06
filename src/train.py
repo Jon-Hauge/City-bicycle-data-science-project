@@ -17,7 +17,7 @@ def run_pipeline():
     model_ready_df = merge_data(target_stations_df, trips_hourly, trips_arrivals, trips_departures, weather_df)
     
     print("Lagrer csv-fil...")
-    output_path_csv = "prosjekt/output/model_ready.csv"
+    output_path_csv = "output/model_ready.csv"
     os.makedirs(os.path.dirname(output_path_csv), exist_ok=True)
     model_ready_df.to_csv(output_path_csv, index=False)
 
@@ -35,8 +35,8 @@ def run_pipeline():
     print("Finner beste modell og tilhørende RMSE...")
     best_model, train_rmse, val_rmse, test_rmse = train_models(X_train, X_val, X_test, y_train, y_val, y_test)
 
-    output_path_ml = "prosjekt/models/best_model.pkl"
-    output_path_fcl = "prosjekt/models/feature_cols.pkl"
+    output_path_ml = "models/best_model.pkl"
+    output_path_fcl = "models/feature_cols.pkl"
     feature_cols = list(X_train.columns)
 
     pickle.dump(best_model, open(output_path_ml, "wb"))
@@ -44,7 +44,7 @@ def run_pipeline():
 
     print(f"\nFerdig! Lagret modell til {output_path_ml}\n og features til {output_path_fcl}")
 
-    finished_model = pickle.load(open("prosjekt/models/best_model.pkl", "rb"))
+    finished_model = pickle.load(open("models/best_model.pkl", "rb"))
     print("\n-----------\nValidering:\n-----------")
     print("Modelltype:", type(finished_model))
 

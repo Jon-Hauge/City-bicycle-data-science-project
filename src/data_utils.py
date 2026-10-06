@@ -4,9 +4,9 @@ import pandas as pd
 def load_raw_data():
 
     # laster inn rådata
-    stations_df = pd.read_csv("prosjekt/raw_data/stations.csv")
-    trips_df = pd.read_csv("prosjekt/raw_data/trips.csv")
-    weather_df = pd.read_csv("prosjekt/raw_data/weather.csv")
+    stations_df = pd.read_csv("raw_data/stations.csv")
+    trips_df = pd.read_csv("raw_data/trips.csv.gz")
+    weather_df = pd.read_csv("raw_data/weather.csv")
 
     return stations_df, trips_df, weather_df
 

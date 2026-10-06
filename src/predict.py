@@ -17,8 +17,8 @@ def predict():
     prediction_timestamp = next_hour + timedelta(hours=1)
 
     # laster inn ML-modellen og kolonnene med features, og definerer target_stations
-    model = pickle.load(open("prosjekt/models/best_model.pkl", "rb"))
-    feature_cols = pickle.load(open("prosjekt/models/feature_cols.pkl", "rb"))
+    model = pickle.load(open("models/best_model.pkl", "rb"))
+    feature_cols = pickle.load(open("models/feature_cols.pkl", "rb"))
     target_stations = ["Møllendalsplass", "Torgallmenningen", "Grieghallen",
                         "Høyteknologisenteret", "Studentboligene", "Akvariet",
                         "Damsgårdsveien 71", "Dreggsallmenningen Sør", "Florida Bybanestopp"]

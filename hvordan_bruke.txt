@@ -17,7 +17,7 @@
     raw_data/
     |── README.md
     |── stations.csv               # Her ligger rådata for stations.csv
-    |── trips.csv                  # Her ligger rådata for trips.csv
+    |── trips.csv.gz               # Her ligger rådata for trips.csv (komprimert til .gz-fil)
     └── weather.csv                # Her ligger rådata for weather.csv
     
     src/
